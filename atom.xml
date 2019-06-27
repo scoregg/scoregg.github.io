@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://scoregg.github.io/"/>
-  <updated>2019-06-27T10:43:28.881Z</updated>
+  <updated>2019-06-27T08:35:29.709Z</updated>
   <id>https://scoregg.github.io/</id>
   
   <author>
@@ -15,26 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>text</title>
-    <link href="https://scoregg.github.io/2019/06/27/text.html"/>
-    <id>https://scoregg.github.io/2019/06/27/text.html</id>
-    <published>2019-06-27T10:43:28.000Z</published>
-    <updated>2019-06-27T10:43:28.881Z</updated>
-    
-    <content type="html"><![CDATA[<p class="description"></p><p><img src="https://" alt="" style="width:100%"></p><a id="more"></a><h1 id=""><a href="#" class="headerlink" title="#"></a>#</h1><h1 id="-1"><a href="#-1" class="headerlink" title="#"></a>#</h1><h1 id="-2"><a href="#-2" class="headerlink" title="#"></a>#</h1><hr>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p class=&quot;description&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://&quot; alt=&quot;&quot; style=&quot;width:100%&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>计算机组成原理题目总结</title>
