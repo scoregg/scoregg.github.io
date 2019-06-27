@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#fff">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f10bbdc2"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#fff">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近想要了解一些前沿技术，不能一门心思眼中只有 web，因为我目前对 Java 语言及其生态相对熟悉，所以在网上搜集了 Hadoop 相关文章，并做了整合。 本篇文章在于对大数据以及 Hadoop 有一个直观的概念，并上手简单体验。">
+<meta name="keywords" content="大数据,Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据学习 | 初识 Hadoop">
+<meta property="og:url" content="https://scoregg.github.io/2018/12/25/大数据学习-初识Hadoop.html">
+<meta property="og:site_name" content="隐秀 | seriouszyx">
+<meta property="og:description" content="最近想要了解一些前沿技术，不能一门心思眼中只有 web，因为我目前对 Java 语言及其生态相对熟悉，所以在网上搜集了 Hadoop 相关文章，并做了整合。 本篇文章在于对大数据以及 Hadoop 有一个直观的概念，并上手简单体验。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c287655d4f10.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c2876565ece1.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/12/27/5c242519227c9.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/27/5c2457210b58d.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/27/5c2457214a2e2.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/27/5c24700c97c3a.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c28765631bc8.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c28765664bab.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c287656a01e5.png">
+<meta property="og:image" content="http://hadoop.apache.org/docs/r2.8.3/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-name-node/img001.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/30/5c28775f7eaa5.jpg">
+<meta property="og:updated_time" content="2019-06-27T08:35:29.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据学习 | 初识 Hadoop">
+<meta name="twitter:description" content="最近想要了解一些前沿技术，不能一门心思眼中只有 web，因为我目前对 Java 语言及其生态相对熟悉，所以在网上搜集了 Hadoop 相关文章，并做了整合。 本篇文章在于对大数据以及 Hadoop 有一个直观的概念，并上手简单体验。">
+<meta name="twitter:image" content="https://i.loli.net/2018/12/30/5c287655d4f10.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="隐秀 | seriouszyx" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://scoregg.github.io/2018/12/25/大数据学习-初识Hadoop.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>大数据学习 | 初识 Hadoop | 隐秀 | seriouszyx</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">隐秀 | seriouszyx</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-reading">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/reading/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>读书/观影</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://scoregg.github.io/2018/12/25/大数据学习-初识Hadoop.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yixiang Zhao">
+      <meta itemprop="description" content="次は现実世界で会おう <br/> そしたらまた <br/> 同じように友だちになれるよ。">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="隐秀 | seriouszyx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大数据学习 | 初识 Hadoop
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-25 12:39:24" itemprop="dateCreated datePublished" datetime="2018-12-25T12:39:24+08:00">2018-12-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-27 16:35:29" itemprop="dateModified" datetime="2019-06-27T16:35:29+08:00">2019-06-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/知识总结/" itemprop="url" rel="index"><span itemprop="name">知识总结</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/25/大数据学习-初识Hadoop.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/25/大数据学习-初识Hadoop.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/25/大数据学习-初识Hadoop.html" class="leancloud_visitors" data-flag-title="大数据学习 | 初识 Hadoop">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近想要了解一些前沿技术，不能一门心思眼中只有 web，因为我目前对 Java 语言及其生态相对熟悉，所以在网上搜集了 Hadoop 相关文章，并做了整合。</p>
+<p>本篇文章在于对大数据以及 Hadoop 有一个直观的概念，并上手简单体验。</p>
+<a id="more"></a>
+<h2 id="Hadoop-基础概念"><a href="#Hadoop-基础概念" class="headerlink" title="Hadoop 基础概念"></a>Hadoop 基础概念</h2><p><code>Hadoop</code> 是一个用 Java 实现的开源框架，是一个分布式的解决方案，将大量的信息处理所带来的压力分摊到其他服务器上。</p>
+<p>在了解各个名词之前，我们必须掌握一组概念。</p>
+<h3 id="结构化数据-vs-非结构化数据"><a href="#结构化数据-vs-非结构化数据" class="headerlink" title="结构化数据 vs 非结构化数据"></a>结构化数据 vs 非结构化数据</h3><p><code>结构化数据</code>即行数据，存储在数据库里，可以用二维表结构来表达，例如：名字、电话、家庭住址等。</p>
+<p>常见的结构化数据库为 mysql、sqlserver。</p>
+<p><img src="https://i.loli.net/2018/12/30/5c287655d4f10.jpg" alt="zhhihu1.jpg"></p>
+<p><code>非结构化数据库</code>是指其字段长度可变，并且每个字段的记录又可以由可重复或不可重复的子字段构成的数据库。无法用结构化的数据模型表示，例如：文档、图片、声音、视频等。在大数据时代，对非关系型数据库的需求日益增加，数据库技术相应地进入了“后关系数据库时代”。</p>
+<p>非结构化数据库代表为 HBase、mongodb。</p>
+<p><img src="https://i.loli.net/2018/12/30/5c2876565ece1.jpg" alt="v2-27e5113596ab21aae1d64516ef015100_1200x500.jpg"></p>
+<p>可以大致归纳，结构化数据是先有结构、再有数据；非结构化数据是先有数据、再有结构。</p>
+<p>Hadoop 是大数据存储和计算的开山鼻祖，现在大多数开源大数据框架都依赖 Hadoop 或者与它能很好地兼容，下面开始讲述 Hadoop 的相关概念。</p>
+<h3 id="Hadoop-1-0-vs-Hadoop-2-0"><a href="#Hadoop-1-0-vs-Hadoop-2-0" class="headerlink" title="Hadoop 1.0 vs Hadoop 2.0"></a>Hadoop 1.0 vs Hadoop 2.0</h3><p><img src="https://i.loli.net/2018/12/27/5c242519227c9.png" alt="Hadoop-1-vs-Hadoop-2-Architecture.png"></p>
+<h3 id="HDFS-和-MapReduce"><a href="#HDFS-和-MapReduce" class="headerlink" title="HDFS 和 MapReduce"></a>HDFS 和 MapReduce</h3><p>Hadoop 为解决<code>存储</code>和<code>分析</code>大量数据而生，所以这两部分也是 Hadoop 的狭义说法（广义指 Hadoop 生态）。HDFS 提供了一种安全可靠的分布式文件存储系统，MapReduce 提供了基于批处理模式的数据分析框架。</p>
+<p><code>HDFS</code>（Hadoop Distributed File System）的设计本质上是为了大量的数据能横跨很多台机器，但是你看到的是一个文件系统而不是很多个文件系统。就好比访问 <code>/hdfs/tmp/file1</code> 的数据，引用的是一个文件路径，但是实际数据可能分布在很多机器上，当然 HDFS 为你管理这些数据，用户并不需要了解它如何管理。</p>
+<p>关于 <code>MapReduce</code>，这里通过一个具体模型来解释。</p>
+<p>考虑如果你要统计一个巨大的文本文件存储在类似 HDFS 上，你想要知道这个文本里各个词的出现频率。你启动了一个 MapReduce 程序。Map 阶段，几百台机器同时读取这个文件的各个部分，分别把各自读到的部分分别统计出词频，产生类似（hello, 12100次），（world，15214次）等等这样的 Pair（我这里把 Map 和 Combine 放在一起说以便简化）；这几百台机器各自都产生了如上的集合，然后又有几百台机器启动 Reduce 处理。Reducer 机器 A 将从 Mapper 机器收到所有以 A 开头的统计结果，机器 B 将收到 B 开头的词汇统计结果（当然实际上不会真的以字母开头做依据，而是用函数产生 Hash 值以避免数据串化。因为类似 X 开头的词肯定比其他要少得多，而你不希望数据处理各个机器的工作量相差悬殊）。然后这些Reducer将再次汇总，（hello，12100）＋（hello，12311）＋（hello，345881）= （hello，370292）。每个 Reducer 都如上处理，你就得到了整个文件的词频结果。</p>
+<p>这就是一个简单的 <code>WordCount</code> 的例子，Map+Reduce 这种简单模型暴力好用，不过很笨重，关于更高效的解决方法，以后再详细描述。</p>
+<h3 id="Hadoop-构建模块"><a href="#Hadoop-构建模块" class="headerlink" title="Hadoop 构建模块"></a>Hadoop 构建模块</h3><p>下面从底层实现的角度解释 HDFS 和 MapReduce 的一些概念。</p>
+<p><code>NameNode</code> 是 Hadoop 守护进程中最重要的一个。NameNode 位于 HDFS 的主端，指导 DataNode 执行底层的 IO 任务。NameNode 的运行消耗大量内存和 IO 资源，所以 NameNode 服务器不会同时是 DataNode 或 TaskTracker。</p>
+<p>NameNode 和 <code>DataNode</code> 为主/从结构（Master/Slave）。每一个集群上的从节点都会驻留一个 DataNode 守护进程，来执行分布式文件系统的繁重工作，将 HDFS 数据块读取或者写入到本地文件系统的实际文件中。当希望对 HDFS 文件进行读写时，文件被分割为多个块，由NameNode 告知客户端每个数据块驻留在那个 DataNode。客户端直接与 DataNode 守护进程通信，来处理与数据块相对应的本地文件。</p>
+<p><code>SNN</code>（Scondary NameNode）是监测 HDFS 集群状态的辅助守护进程。SNN 快照有助于加少停机的时间并降低数据丢失的风险。</p>
+<p><code>JobTracker</code> 守护进程是应用程序和 Hadoop 之间的纽带。一旦提交代码到集群上，JobTracker 就会确定执行计划，包括决定处理哪些文件，为不同的任务分配节点以及监控所有任务的运行。如果任务失败，JobTracker 将自动重启任务，但所分配的节点可能会不同，同时受到预定义的重试次数限制。每一个Hadoop集群只有一个JobTracker守护进程，它通常运行在服务器集群的主节点上。</p>
+<p>JobTracker 和 <code>TaskTracker</code> 也是主/从结构。JobTracker 作为主节点，监测 MapReduce 作业的整个执行过程，同时，TaskTracker 管理各个任务在每个从节点上的执行情况。TaskTracker 的一个职责就是负责持续不断地与 JobTracker 通讯。如果 JobTracker 在指定的时间内没有收到来自 TaskTracker 的心跳，它会假定 TaskTracker 已经崩溃了，进而重新提交相应的任务到集群的其他节点中。</p>
+<h2 id="尝试使用-Hadoop"><a href="#尝试使用-Hadoop" class="headerlink" title="尝试使用 Hadoop"></a>尝试使用 Hadoop</h2><p><code>Hadoop 安装</code>可以直接看官方文档，或是 Google 一些不错的教程，比如 <a href="https://chu888chu888.gitbooks.io/hadoopstudy/content/Content/4/chapter0401.html" target="_blank" rel="noopener">Hadoop 的安装</a>、<a href="https://www.jianshu.com/p/de7eb61c983a" target="_blank" rel="noopener">Mac 系统安装Hadoop 2.7.3</a>。</p>
+<p>按照操作配置 Hadoop 并成功运行，访问<code>localhost:50070</code> 和 <code>localhost:8088</code> 分别显示一下页面。</p>
+<p><img src="https://i.loli.net/2018/12/27/5c2457210b58d.png" alt="90496E3D-A8FB-41CE-9FF0-3B962184AFAE.png"></p>
+<p><img src="https://i.loli.net/2018/12/27/5c2457214a2e2.png" alt="1CBC323A-55DC-40AC-B258-3725DD0D4350.png"></p>
+<p>运行<code>伪分布式</code>样例：</p>
+<p><img src="https://i.loli.net/2018/12/27/5c24700c97c3a.png" alt="31D3E6A6-5864-4C6E-865E-AE576A64E647.png"></p>
+<h3 id="HDFS-目录-文件操作命令"><a href="#HDFS-目录-文件操作命令" class="headerlink" title="HDFS 目录/文件操作命令"></a>HDFS 目录/文件操作命令</h3><p>HDFS 是一种文件系统，它可以将一个很大的数据集存储为一个文件，而大多数其他文件系统无力于这一点。Hadoop 也为它提供了一种与 Linux 命令类似的命令行工具，我们可以进行一些简单的操作。</p>
+<p>Hadoop 的<code>文件命令</code>采取的形式为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -cmd &lt;args&gt;</span><br></pre></td></tr></table></figure>
+<p>其中 cmd 为具体的文件命令，通常与 UNIX 对应的命令名相同，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -ls</span><br><span class="line">hadoop fs -mkdir /user/seriouszyx</span><br><span class="line">hadoop fs -lsr /</span><br><span class="line">hadoop fs -rm example.txt</span><br></pre></td></tr></table></figure>
+<p>还有一些本地文件系统和 HDFS 交互的命令，也经常使用到。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put example.txt /user/seriouszyx</span><br><span class="line">hadoop fs -get example.txt</span><br></pre></td></tr></table></figure>
+<h2 id="Hadoop-构建模块的原理"><a href="#Hadoop-构建模块的原理" class="headerlink" title="Hadoop 构建模块的原理"></a>Hadoop 构建模块的原理</h2><h3 id="MapReduce-如何分而治之"><a href="#MapReduce-如何分而治之" class="headerlink" title="MapReduce 如何分而治之"></a>MapReduce 如何分而治之</h3><p>MapReduce 是用来处理大规模数据的一个并行编程框架，采用了对数据“分而治之”的方法。</p>
+<p><img src="https://i.loli.net/2018/12/30/5c28765631bc8.png" alt="40658-2de7c5066daf7ab1.png"></p>
+<p>MapReduce 是一个离线计算框架，它将计算分为两个阶段，Map（并行处理输入数据）和 Reduce（对 Map 结果汇总）。其中 Map 和 Reduce 函数提供了两个高层接口，由用户去编程实现。</p>
+<p>Map 的一般处理逻辑为：<strong>(k1;v1) ——&gt;map 处理——&gt;[(k2;v2)]</strong></p>
+<p>Reduce 函数的一般处理逻辑是：<strong>(k2;[v2])——&gt;reduce 处理——&gt;[(k3;v3)]</strong></p>
+<p>可以看出 map 处理的输出与 reduce 的输入并不完全相同，这是因为输入参数在进入 reduce 前，一般会将相同键 k2 下的所有值 v2 合并到一个集合中处理：<strong>[(k2;v2)]—-&gt;(k2;[v2])</strong>，这个过程叫 Combiner。</p>
+<p>在经过 Map 和 Reduce 的抽象后，并行结构模型就变成了下面这样：</p>
+<p><img src="https://i.loli.net/2018/12/30/5c28765664bab.png" alt="40658-df82b7a1775fac75.png"></p>
+<p>上图中可以发现，中间有一个同步障（Barrier），其作用是等所有的 map 节点处理完后才进入 reduce，并且这个阶段同时进行数据加工整理过程（Aggregation &amp; Shuffle），以便 reduce 节点可以完全基于本节点上的数据计算最终结果。</p>
+<p>不过这仍然不是完整的 MapReduce 模型，在上述框架图中，还少了两个步骤 Combiner 和 Partitioner。</p>
+<p><img src="https://i.loli.net/2018/12/30/5c287656a01e5.png" alt="40658-39cc7b851195657c.png"></p>
+<p>上述图以<code>词频统计（WordCount）</code>为例。</p>
+<p><strong>Combiner</strong> 用来对中间结果数据网络传输进行优化，比如 map 处理完输出很多键值对后，某些键值对的键是相同的，Combiner 就会将相同的键合并，比如有两个键值对的键相同（good，1）和（good，2），便可以合成(good,3)。</p>
+<p>这样，可以减少需要传输的中间结果数据量，打倒网络数据传输优化，因为 map 传给 reduce 是通过网络来传的。</p>
+<p><strong>Partitioner</strong> 负责对中间结果进行分区处理。比如词频统计，将所有主键相同的键值对传输给同一个 Reduce 节点，以便 Reduce 节点不需要访问其他 Reduce 节点的情况下，一次性对分过来的中间结果进行处理。</p>
+<h3 id="副本机制"><a href="#副本机制" class="headerlink" title="副本机制"></a>副本机制</h3><p>我们再说回 HDFS 诞生的原因，hdfs 由 Google 最先研发，其需求是单独一台计算机所能存储的空间是有限的，而随着计算机存储空间的加大，其价格是呈几何倍的增长。而 hdfs 架构在相对廉价的计算机上，以分布式的方式，这样想要扩大空间之遥增加集群的数量就可以了。</p>
+<p>大量相对廉价的计算机，那么说明<strong>宕机</strong>就是一种必然事件，我们需要让数据避免丢失，就只用采取冗余数据存储，而具体的实现的就是<code>副本机制</code>。</p>
+<p><img src="http://hadoop.apache.org/docs/r2.8.3/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png" alt=""></p>
+<p>hdfs 主要使用<code>三副本机制</code></p>
+<ul>
+<li>第一副本：如果上传节点是 DN，则上传该节点；如果上传节点是 NN，则随机选择 DN</li>
+<li>第二副本：放置在不同机架的 DN 上</li>
+<li>第三副本：放置在与第二副本相同机架的不同 DN 上</li>
+</ul>
+<p>除了极大程度地避免宕机所造成的数据损失，副本机制还可以在数据读取时进行数据校验。</p>
+<h3 id="NameNode-在做些什么"><a href="#NameNode-在做些什么" class="headerlink" title="NameNode 在做些什么"></a>NameNode 在做些什么</h3><p>在 Hadoop 1.0 时代，Hadoop 两大核心组件 HDFS NameNode 和 JobTracker 都存在着单点问题，其中以 NameNode 最为严重。因为 <code>NameNode 保存了整个 HDFS 的元数据信息</code>，一旦 NameNode 挂掉，整个 HDFS 就无法访问，同时 Hadoop 生态系统中依赖于 HDFS 的各个组件，包括 MapReduce、Hive、Pig 以及 HBase 等也都无法正常工作，并且重新启动 NameNode 和进行数据恢复的过程也会比较耗时。</p>
+<p>这些问题在给 Hadoop 的使用者带来困扰的同时，也极大地限制了 Hadoop 的使用场景，使得 Hadoop 在很长的时间内仅能用作离线存储和离线计算，无法应用到对可用性和数据一致性要求很高的在线应用场景中。</p>
+<p>所幸的是，在 Hadoop2.0 中，HDFS NameNode 和 YARN ResourceManger(JobTracker 在 2.0 中已经被整合到 YARN ResourceManger 之中) 的单点问题都得到了解决，经过多个版本的迭代和发展，目前已经能用于生产环境。</p>
+<p><img src="https://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-name-node/img001.png" alt=""></p>
+<p>从上图中我们可以看到，有两台 NameNode——Active NameNode 和 Standby NameNode，一台处于 Active 状态，为主 NameNode，另外一台处于 Standby 状态，为备 NameNode，只有主 NameNode 才能对外提供读写服务。</p>
+<h3 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h3><p><code>Yarn</code> 是 Hadoop 集群的新一代资源管理系统。Hadoop 2.0 对 MapReduce 框架做了彻底的设计重构，我们称 Hadoop 2.0 中的 MapReduce 为 MRv2 或者 Yarn。</p>
+<p><img src="https://i.loli.net/2018/12/30/5c28775f7eaa5.jpg" alt="20151029092726524 (2).jpg"></p>
+<p>在 Hadoop 2.x 中，Yarn 把 job 的概念换成了 <code>application</code>，因为运行的应用不只是 MapReduce 了，还可能是其他应用，如一个 DAG（有向无环图 Directed Acyclic Graph，例如 Storm 应用）。</p>
+<p>Yarn 另一个目标是扩展 Hadoop，使得它不仅仅可以支持 MapReduce 计算，还能很方便地管理诸如 Hive、Pig、Hbase、Spark/Shark 等应用。</p>
+<p>这种新的架构设计能够使得各种类型的应用运行在 Hadoop 上面，并通过 Yarn 从系统层面进行统一的管理，也就是说，有了 Yarn，<strong>各种应用就可以互不干扰的运行在同一个 Hadoop 系统中</strong>，共享整个集群资源。</p>
+<h3 id="ResourceManager-在做些什么"><a href="#ResourceManager-在做些什么" class="headerlink" title="ResourceManager 在做些什么"></a>ResourceManager 在做些什么</h3><p>刚刚提到的 Yarn 也采用了 Master/Slave 结构，其中 Master 为 <strong>ResourceManager</strong>，负责整个集群的资源管理与调度；Slave 实现为 <strong>NodeManager</strong>，负责单个节点的组员管理与任务启动。 </p>
+<p>ResourceManager 是整个 Yarn 集群中最重要的组件之一，它的功能较多，包括 ApplicationMaster 管理（启动、停止等）、NodeManager 管理、Application 管理、状态机管理等。</p>
+<p>ResourceManager 主要完成以下几个功能：</p>
+<ul>
+<li>与客户端交互，处理来自客户端的请求</li>
+<li>启动和管理 ApplicationMaster，并在它失败时重新启动它</li>
+<li>管理 NodeManager，接受来自 NodeManager 的资源管理汇报信息，并向 NodeManager 下达管理命令或把信息按照一定的策略分配给各个应用程序（ApplicationManager）等</li>
+<li><strong>资源管理与调度，接受来自 ApplicationMaster 的资源申请请求，并为之分配资源（核心）</strong></li>
+</ul>
+<p>在 Master/Slave 架构中，ResourceManager 同样存在单点故障（高可用问题，High Availability）问题。为了解决它，通常采用热备方案，即集群中存在一个对外服务的 Active Master 和若干个处于就绪状态的 Standy Master，一旦 Active Master 出现故<br>障，立即采用一定的侧率选取某个 Standy Master 转换为 Active Master 以正常对外提供服务。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了 Hadoop 的相关概念，包括量大核心部件 HDFS 和 MapReduce，并对其进行了进一步剖析，Hadoop 2.0 的 Yarn 的简单介绍，以及一些问题的解决方法（如 HA）。</p>
+<p>也通过配置第一次在本机上配置了 Hadoop 的运行环境，运行了伪分布式样例。</p>
+<p>接下来会结合一个具体问题深入理解 Hadoop 的方方面面。</p>
+<p><br></p>
+<blockquote>
+<p>  References:<br>   <a href="https://chu888chu888.gitbooks.io/hadoopstudy/content/" target="_blank" rel="noopener">大数据学习笔记</a><br>   <a href="https://zhuanlan.zhihu.com/p/26545566" target="_blank" rel="noopener">一文读懂大数据平台——写给大数据开发初学者的话!</a><br>  <a href="https://www.jianshu.com/p/ed6b35f52e3c" target="_blank" rel="noopener">Hadoop HDFS和MapReduce</a><br>  <a href="http://pangjiuzala.github.io/2015/08/03/HDFS%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" target="_blank" rel="noopener">HDFS文件操作</a><br>  <a href="https://www.jianshu.com/p/35be7bdca902" target="_blank" rel="noopener">hadoop笔记4—MapReduce框架</a><br>  <a href="https://blog.csdn.net/suifeng3051/article/details/49486927" target="_blank" rel="noopener">Hadoop Yarn详解</a><br>  <a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-name-node/index.html" target="_blank" rel="noopener">Hadoop NameNode 高可用 (High Availability) 实现解析</a><br><a href="https://blog.csdn.net/zhangzhebjut/article/details/37730065" target="_blank" rel="noopener">Hadoop -YARN ResourceManager 剖析</a></p>
+</blockquote>
+<hr>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+          
+            
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/12/25/大数据学习-初识Hadoop.html">大数据学习 | 初识 Hadoop</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Yixiang Zhao 的个人博客">Yixiang Zhao</a></p>
+  <p><span>发布时间:</span>2018年12月25日 - 12:39</p>
+  <p><span>最后更新:</span>2019年06月27日 - 16:35</p>
+  <p><span>原始链接:</span><a href="/2018/12/25/大数据学习-初识Hadoop.html" title="大数据学习 | 初识 Hadoop">https://scoregg.github.io/2018/12/25/大数据学习-初识Hadoop.html</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://scoregg.github.io/2018/12/25/大数据学习-初识Hadoop.html" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+  });
+    });  
+</script>
+
+          
+    </div>
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i>大数据</a>
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i>Hadoop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/06/《Algorithms-Part-1》Programming-Assignment-1-Percolation.html" rel="prev" title="《Algorithms,Part 1》Programming Assignment 1: Percolation">
+                 <i class="fa fa-chevron-left"></i> 《Algorithms,Part 1》Programming Assignment 1: Percolation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/10/总结-展望-世界不会因为你的无知而停下脚步.html" rel="next" title="[总结|展望] 世界不会因为你的无知而停下脚步">
+                [总结|展望] 世界不会因为你的无知而停下脚步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+            <a href="/">
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Yixiang Zhao">
+            </a>
+            
+              <p class="site-author-name" itemprop="name">Yixiang Zhao</p>
+              <p class="site-description motion-element" itemprop="description">次は现実世界で会おう <br> そしたらまた <br> 同じように友だちになれるよ。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/seriouszyx" title="GitHub &rarr; https://github.com/seriouszyx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:seriouszyx@gmail.com" title="E-Mail &rarr; mailto:seriouszyx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://plus.google.com/seriouszyx" title="Google &rarr; https://plus.google.com/seriouszyx" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/seriouszyx1" title="Twitter &rarr; https://twitter.com/seriouszyx1" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-基础概念"><span class="nav-number">1.</span> <span class="nav-text">Hadoop 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构化数据-vs-非结构化数据"><span class="nav-number">1.1.</span> <span class="nav-text">结构化数据 vs 非结构化数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop-1-0-vs-Hadoop-2-0"><span class="nav-number">1.2.</span> <span class="nav-text">Hadoop 1.0 vs Hadoop 2.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-和-MapReduce"><span class="nav-number">1.3.</span> <span class="nav-text">HDFS 和 MapReduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop-构建模块"><span class="nav-number">1.4.</span> <span class="nav-text">Hadoop 构建模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尝试使用-Hadoop"><span class="nav-number">2.</span> <span class="nav-text">尝试使用 Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-目录-文件操作命令"><span class="nav-number">2.1.</span> <span class="nav-text">HDFS 目录/文件操作命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-构建模块的原理"><span class="nav-number">3.</span> <span class="nav-text">Hadoop 构建模块的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce-如何分而治之"><span class="nav-number">3.1.</span> <span class="nav-text">MapReduce 如何分而治之</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#副本机制"><span class="nav-number">3.2.</span> <span class="nav-text">副本机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NameNode-在做些什么"><span class="nav-number">3.3.</span> <span class="nav-text">NameNode 在做些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Yarn"><span class="nav-number">3.4.</span> <span class="nav-text">Yarn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResourceManager-在做些什么"><span class="nav-number">3.5.</span> <span class="nav-text">ResourceManager 在做些什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yixiang Zhao</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.min.js"></script>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: '6dpTn64BlB3dEdcvG7RI4pMo-gzGzoHsz',
+        appKey: 'rIRTS8vIL6Jx02cXPihaHN4c',
+        placeholder: '别急，慢慢说',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "mtpW2sIlIHeJQk0FGq2ddMVQ-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "mtpW2sIlIHeJQk0FGq2ddMVQ-gzGzoHsz",
+                'X-LC-Key': "S8VWUb1LK61DctReez2JM8P1",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
